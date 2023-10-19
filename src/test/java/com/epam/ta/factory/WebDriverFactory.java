@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.Objects;
 
-@Component
 public class WebDriverFactory {
 
     private WebDriver driver;
@@ -28,6 +27,13 @@ public class WebDriverFactory {
         );
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver;
+    }
+
+    public void tearDown() {
+        if(Objects.nonNull(driver)) {
+            driver.quit();
+            driver = null;
+        }
     }
 
 }

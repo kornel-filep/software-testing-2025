@@ -7,7 +7,8 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
     features = "src/test/resources",
-    glue = {"com.epam.ta"}
+    glue = {"com.epam.ta"},
+    plugin = {"pretty"}
 )
 public class TestRunner {
 }

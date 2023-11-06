@@ -43,14 +43,15 @@ public class StepDefinitions {
 
     @Then("I see {int} community card")
     public void iSeeCommunityCard(int expectedCardCount) throws InterruptedException {
+        var actualCardCount = 0;
         for (int i = 0; i < 3; i++) {
-            var actualCardCount = communitiesPage.getCommunityCards().size();
+            actualCardCount = communitiesPage.getCommunityCards().size();
             if (actualCardCount == expectedCardCount) {
                 return;
             }
             Thread.sleep(1000);
         }
-        Assert.fail("Expected card count did not match actual card count");
+        Assert.fail("Expected card count did not match actual card count: " + actualCardCount);
     }
 
     @Given("the {string} button is clicked")

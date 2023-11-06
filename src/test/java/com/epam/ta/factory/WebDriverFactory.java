@@ -1,6 +1,7 @@
 package com.epam.ta.factory;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,6 +14,12 @@ public class WebDriverFactory {
 
     @Value("${headless:false}")
     private Boolean headless;
+
+    @Value("${width:1920}")
+    private int width;
+
+    @Value("${height:1080}")
+    private int height;
 
     private WebDriver driver;
 
@@ -29,6 +36,7 @@ public class WebDriverFactory {
             new ChromeOptions().setHeadless(headless).addArguments("--remote-allow-origins=*")
         );
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().setSize(new Dimension(width, height));
         return driver;
     }
 

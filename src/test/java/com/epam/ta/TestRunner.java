@@ -8,7 +8,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
     features = "src/test/resources",
     glue = {"com.epam.ta"},
-    plugin = {"pretty"}
+    stepNotifications = true,
+    plugin = {"pretty", "html:target/test-report.html"}
 )
 public class TestRunner {
 }

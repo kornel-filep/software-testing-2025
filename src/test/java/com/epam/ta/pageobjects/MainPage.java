@@ -14,6 +14,7 @@ public class MainPage {
     private WebElement communitiesButton;
 
     private WebDriver webDriver;
+
     public MainPage(WebDriverFactory webDriverFactory) {
         var webDriver = webDriverFactory.getDriver();
         PageFactory.initElements(webDriver, this);

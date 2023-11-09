@@ -23,6 +23,13 @@ public class WebDriverFactory {
 
     private WebDriver driver;
 
+    private static final Duration IMPLICIT_WAIT_DURATION = Duration.ofSeconds(10);
+
+    /**
+     * Gets the WebDriver instance, initializing it if necessary.
+     * 
+     * @return The WebDriver instance.
+     */
     public WebDriver getDriver() {
         if (Objects.isNull(driver)) {
             driver = setUpWebDriver();
@@ -30,16 +37,24 @@ public class WebDriverFactory {
         return driver;
     }
 
+    /**
+     * Sets up and returns a new WebDriver instance with configured options.
+     * 
+     * @return The configured WebDriver instance.
+     */
     private WebDriver setUpWebDriver() {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver(
-            new ChromeOptions().setHeadless(headless).addArguments("--remote-allow-origins=*")
-        );
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+                new ChromeOptions().setHeadless(headless).addArguments("--remote-allow-origins=*"));
+        driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_DURATION);
         driver.manage().window().setSize(new Dimension(width, height));
         return driver;
     }
 
+    /**
+     * Tears down the WebDriver instance, quitting the browser.
+     * If the WebDriver instance is not null, it is quitted and set to null.
+     */
     public void tearDown() {
         if (Objects.nonNull(driver)) {
             driver.quit();

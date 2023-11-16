@@ -30,14 +30,11 @@ public class CommunitiesPage {
     @FindBy(css = ".evnt-name-wrapper")
     private List<WebElement> communityCardTitles;
 
-    private WebDriver webDriver;
-
-    private WebDriverFactory webDriverFactory;
+    private final WebDriver webDriver;
 
     public CommunitiesPage(WebDriverFactory webDriverFactory) {
-        var webDriver = webDriverFactory.getDriver();
+        this.webDriver = webDriverFactory.getDriver();
         PageFactory.initElements(webDriver, this);
-        this.webDriver = webDriver;
     }
 
     public void searchForInput(String input) {
@@ -50,8 +47,8 @@ public class CommunitiesPage {
 
     public List<String> getCommunityCardTitles() {
         return communityCardTitles.stream()
-            .map(WebElement::getText)
-            .toList();
+                .map(WebElement::getText)
+                .toList();
     }
 
     public WebElement getLocationFilter() {

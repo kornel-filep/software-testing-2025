@@ -13,11 +13,11 @@ public class MainPage {
     @FindBy(xpath = "//*[@id=\"app\"]/header/div/div/ul[1]/li[1]/a")
     private WebElement communitiesButton;
 
-    private WebDriver webDriver;
+    private final WebDriver webDriver;
+
     public MainPage(WebDriverFactory webDriverFactory) {
-        var webDriver = webDriverFactory.getDriver();
+        this.webDriver = webDriverFactory.getDriver();
         PageFactory.initElements(webDriver, this);
-        this.webDriver = webDriver;
     }
 
     public WebElement getCommunitiesButton() {

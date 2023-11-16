@@ -3,27 +3,24 @@ package com.epam.ta.stepdefinition;
 import com.epam.ta.factory.WebDriverFactory;
 import com.epam.ta.pageobjects.CommunitiesPage;
 import com.epam.ta.pageobjects.MainPage;
-
-import dev.failsafe.internal.util.Durations;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.netty.handler.timeout.TimeoutException;
-
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Duration;
+import java.util.NoSuchElementException;
+
 import static com.epam.ta.helpers.Addresses.COMMUNITIES_PAGE;
 import static com.epam.ta.helpers.Addresses.MAIN_PAGE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-
-import java.time.Duration;
-import java.util.NoSuchElementException;
 
 public class StepDefinitions {
 
@@ -49,25 +46,23 @@ public class StepDefinitions {
     }
 
     @When("I search for {string}")
-    public void iSearchFor(String input) {
+    public void iSearchFor(String input) throws InterruptedException {
+        Thread.sleep(500);
         communitiesPage.searchForInput(input);
     }
 
     @Then("I see {int} community card")
     public void iSeeCommunityCard(int expectedCardCount) throws InterruptedException {
         WebDriver driver = webDriverFactory.getDriver();
-        FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-                .withTimeout(TIMEOUT_SECONDS)
-                .pollingEvery(POLLING_TIMEOUT_SECONDS)
-                .ignoring(NoSuchElementException.class);
+        FluentWait<WebDriver> wait = new FluentWait<>(driver)
+            .withTimeout(TIMEOUT_SECONDS)
+            .pollingEvery(POLLING_TIMEOUT_SECONDS)
+            .ignoring(NoSuchElementException.class);
 
         try {
-            wait.until(new ExpectedCondition<Boolean>() {
-                @Override
-                public Boolean apply(WebDriver driver) {
-                    return communitiesPage.getCommunityCards().size() == expectedCardCount;
-                }
-            });
+            wait.until(
+                (ExpectedCondition<Boolean>) driver1 -> communitiesPage.getCommunityCards().size() ==
+                    expectedCardCount);
         } catch (TimeoutException e) {
             Assert.fail("Expected card count did not match actual card count.");
         }

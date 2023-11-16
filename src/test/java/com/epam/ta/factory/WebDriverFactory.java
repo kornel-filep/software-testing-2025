@@ -5,6 +5,10 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.Duration;
@@ -14,6 +18,9 @@ public class WebDriverFactory {
 
     @Value("${headless:false}")
     private Boolean headless;
+
+    @Value("${browserName:chrome}")
+    private String browserName;
 
     @Value("${width:1920}")
     private int width;
@@ -27,7 +34,7 @@ public class WebDriverFactory {
 
     /**
      * Gets the WebDriver instance, initializing it if necessary.
-     * 
+     *
      * @return The WebDriver instance.
      */
     public WebDriver getDriver() {
@@ -39,13 +46,29 @@ public class WebDriverFactory {
 
     /**
      * Sets up and returns a new WebDriver instance with configured options.
-     * 
+     *
      * @return The configured WebDriver instance.
      */
     private WebDriver setUpWebDriver() {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver(
-                new ChromeOptions().setHeadless(headless).addArguments("--remote-allow-origins=*"));
+        WebDriver driver;
+        switch (browserName) {
+            case "chrome" -> {
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver(
+                    new ChromeOptions().setHeadless(headless).addArguments("--remote-allow-origins=*")
+                );
+            }
+            case "firefox" -> {
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver(new FirefoxOptions().setHeadless(headless));
+            }
+            case "safari" -> {
+                WebDriverManager.safaridriver().setup();
+                driver = new SafariDriver(new SafariOptions());
+            }
+            default ->
+                throw new RuntimeException(String.format("The %s as provided browser name is not valid.", browserName));
+        }
         driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_DURATION);
         driver.manage().window().setSize(new Dimension(width, height));
         return driver;

@@ -47,8 +47,8 @@ public class CommunitiesPage {
 
     public List<String> getCommunityCardTitles() {
         return communityCardTitles.stream()
-                .map(WebElement::getText)
-                .toList();
+            .map(WebElement::getText)
+            .toList();
     }
 
     public WebElement getLocationFilter() {
@@ -61,5 +61,9 @@ public class CommunitiesPage {
 
     public WebElement getLocationFilterHighlightedItem() {
         return locationFilterHighlightedItem;
+    }
+
+    public WebElement getSearchInput() {
+        return searchInput;
     }
 }

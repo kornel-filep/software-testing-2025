@@ -11,7 +11,7 @@ Feature: Search on the communities page
 
     Examples:
       | cardName  | cardCount |
-      | Idea Pool | 1         |
+      | Idea Pool | 2         |
       | Budapest  | 4         |
       | Debrecen  | 2         |
 

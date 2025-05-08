@@ -20,4 +20,4 @@ Feature: Search on the communities page
     Given the 'Communities' button is clicked
     When I narrow the location to 'Budapest'
     And I click the highlited checkbox
-    Then I see 7 community card
+    Then I see 8 community card

@@ -1,7 +1,7 @@
-# University of Nyiregyhaza - Software testing - Java UI Test Automation Demo
+# University of Debrecen - Software testing - Java UI Test Automation Demo
 
 ## Description
-Java UI Automation Project for Educational Purposes @ University of Nyiregyhaza Software Testing class.  
+Java UI Automation Project for Educational Purposes @ University of Debrecen Software Testing class.  
 
 ## Used tools
 - Java 17
